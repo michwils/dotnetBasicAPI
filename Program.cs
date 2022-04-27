@@ -3,7 +3,7 @@ using Kubernetes.Probes;
 //init
 DotNetEnv.Env.Load();
 
-var probes = new KubernetesProbes();
+var probes = new KubernetesProbesManager();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +27,11 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 //setup
-probes.ConfigureProbes(ref app);
+var stateManager = probes.ConfigureProbes(ref app);
+
+stateManager.LivenessState = new ProbeStatus { Error = false, Description = "App Running" };
+
+stateManager.ReadinessState = new ProbeStatus { Error = false, Description = "App ready for traffic" };
+stateManager.StartupState = new ProbeStatus { Error = false, Description = "App Started" };
 
 app.Run();

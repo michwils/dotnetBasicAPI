@@ -2,16 +2,22 @@ using Microsoft.AspNetCore.Builder;
 
 namespace Kubernetes.Probes
 {
-  public class KubernetesProbes
+
+  /// <summary>
+  /// Call ConfigureProbes with a ref to WebApplication to setup probes
+  ///  will read .env if loaded, if env variables are not set each probe setup will be skipped.
+  ///</summary
+  public sealed class KubernetesProbesManager
   {
-    private ProbeStatus _livnessStatus = new ProbeStatus();
-    private ProbeStatus _readinessStatus = new ProbeStatus();
-    private ProbeStatus _startupStatus = new ProbeStatus();
-    public void ConfigureProbes(ref WebApplication app)
+    private ProbeStateManager _stateManager = ProbeStateManager.Instance;
+
+    public ProbeStateManager ConfigureProbes(ref WebApplication app)
     {
       configureLiveness(ref app);
       configureReadiness(ref app);
       configureStartup(ref app);
+
+      return this._stateManager;
     }
 
     private void configureLiveness(ref WebApplication app)
@@ -23,8 +29,8 @@ namespace Kubernetes.Probes
         app.MapGet(path, async (c) =>
         {
           //TODO: Update this for future use change error to support status code, good enough for demo
-          c.Response.StatusCode = !_livnessStatus.Error ? 200 : 500;
-          await c.Response.WriteAsJsonAsync(_livnessStatus);
+          c.Response.StatusCode = !_stateManager.LivenessState.Error ? 200 : 500;
+          await c.Response.WriteAsJsonAsync(_stateManager.LivenessState);
         });
       }
     }
@@ -39,7 +45,7 @@ namespace Kubernetes.Probes
         {
           //TODO: Correct below
           c.Response.StatusCode = 200;
-          await c.Response.WriteAsJsonAsync(_readinessStatus);
+          await c.Response.WriteAsJsonAsync(this._stateManager.ReadinessState);
         });
       }
     }
@@ -54,7 +60,7 @@ namespace Kubernetes.Probes
         {
           //TODO: Correct below
           c.Response.StatusCode = 200;
-          await c.Response.WriteAsJsonAsync(_startupStatus);
+          await c.Response.WriteAsJsonAsync(this._stateManager.StartupState);
         });
       }
     }
