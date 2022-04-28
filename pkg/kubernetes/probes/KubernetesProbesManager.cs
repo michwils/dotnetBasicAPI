@@ -29,7 +29,7 @@ namespace Kubernetes.Probes
         app.MapGet(path, async (c) =>
         {
           //TODO: Update this for future use change error to support status code, good enough for demo
-          c.Response.StatusCode = !_stateManager.LivenessState.Error ? 200 : 500;
+          c.Response.StatusCode = !_stateManager.LivenessState.IsError ? 200 : 500;
           await c.Response.WriteAsJsonAsync(_stateManager.LivenessState);
         });
       }
