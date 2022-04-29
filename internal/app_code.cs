@@ -24,6 +24,16 @@ namespace TheApp
         await c.Response.WriteAsJsonAsync(this.State);
       });
 
+      var path2 = DotNetEnv.Env.GetString("APPURL_SECONDAPI", "/APPURL_SECONDAPIz");
+
+      app.MapGet(path2, async (c) =>
+      {
+        //TODO: Correct below
+        c.Response.StatusCode = 200;
+        await c.Response.WriteAsJsonAsync(this.State);
+      });
+
+
       psm.ReadinessState = new ProbeStatus { IsError = false, Description = "App has initialized and ready for traffic." };
       this.State = new AppState { IsError = false, Description = "App Initialized ...", SomeOtherAppDetail = "Stage B" };
 
