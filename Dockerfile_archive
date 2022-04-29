@@ -1,0 +1,23 @@
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+LABEL author = "Mike Wilson"
+
+WORKDIR /source
+
+#GET Packages etc
+COPY *.sln .
+COPY *.csproj .
+RUN dotnet restore
+
+#COPY all and build
+COPY . .
+RUN dotnet publish -c release -o /app --no-restore
+
+#ASPNET image
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+WORKDIR /app
+
+ENV ASPNETCORE_URLS=http://+:5555
+EXPOSE 5555
+
+COPY --from=build /app ./
+ENTRYPOINT ["dotnet", "dotnetBasicAPI.dll", "--server.urls", "https://+:5555"]

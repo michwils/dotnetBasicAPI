@@ -36,5 +36,5 @@ msbuild.wrn
 # Visual Studio 2015
 .vs/
 
-# environment
-*.env
+# environment keep for demos
+#*.env

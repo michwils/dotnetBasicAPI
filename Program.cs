@@ -25,7 +25,8 @@ if (app.Environment.IsDevelopment())
   app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.Urls.Add("http://*:5555");
+//app.UseHttpsRedirection();
 
 //setup
 var stateManager = probes.ConfigureProbes(ref app);
