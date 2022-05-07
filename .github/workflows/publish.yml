@@ -11,6 +11,7 @@ on:
 env:
   REGISTRY: docker.io                                  # Image registry, ghcr.io incase of GitHub Container Registry
   IMAGE_NAME: ${{ github.repository }}                 # Name of the image comes from the repository name
+  E_REPO: axodevelopment/dotnetbasicapi
 
 jobs:
   release:
@@ -39,7 +40,7 @@ jobs:
           docker login -u ${{ secrets.DOCKERHUB_REPO_USER }} -p ${{ secrets.DOCKERHUB_REPO_PW }}
 
       - name: Build the Docker image # push The image to the docker hub
-        run: docker build . --file Dockerfile --tag michwils/dotnetbasicapi:${{ steps.version-bump.outputs.newTag }}
+        run: docker build . --file Dockerfile --tag ${{ env.E_REPO }}:${{ steps.version-bump.outputs.newTag }}
 
       - name: Docker Push
-        run: docker push michwils/dotnetbasicapi:${{ steps.version-bump.outputs.newTag }}
+        run: docker push ${{ env.E_REPO }}:${{ steps.version-bump.outputs.newTag }}
