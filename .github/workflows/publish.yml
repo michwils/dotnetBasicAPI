@@ -39,7 +39,7 @@ jobs:
           docker login -u ${{ secrets.DOCKERHUB_REPO_USER }} -p ${{ secrets.DOCKERHUB_REPO_PW }}
 
       - name: Build the Docker image # push The image to the docker hub
-        run: docker build . --file Dockerfile --tag ${{ env.IMAGE_NAME }}:${{ steps.version-bump.outputs.newTag }}
+        run: docker build . --file Dockerfile --tag michwils/dotnetbasicapi:${{ steps.version-bump.outputs.newTag }}
 
       - name: Docker Push
-        run: docker push ${{ env.IMAGE_NAME }}:${{ steps.version-bump.outputs.newTag }}   #${{ steps.date.outputs.date }}
+        run: docker push michwils/dotnetbasicapi:${{ steps.version-bump.outputs.newTag }}
