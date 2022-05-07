@@ -49,7 +49,7 @@ jobs:
 
       - name: docker login
         run: | # log into docker hub account
-          docker login -u $DOCKERHUB_REPO_USER -p $DOCKERHUB_REPO_PW
+          docker login -u ${{ secrets.DOCKERHUB_REPO_USER }} -p ${{ secrets.DOCKERHUB_REPO_PW }}
 
       - name: Build the Docker image # push The image to the docker hub
         run: docker build . --file Dockerfile --tag ${{ env.IMAGE_NAME }}:${{ steps.version-bump.outputs.newTag }}
