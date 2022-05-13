@@ -1,12 +1,10 @@
 name: Docker                                           # Name of the workflow
 
-#on:
-#  push:
-#    branches: [ main ]                                 # Workflow to run only when changes are made to `main` branch
-
 on:
   push:
-    branches: [master]
+    #branches: [master]
+    paths-ignore:
+      - "/kustomize/**"
 
 env:
   REGISTRY: docker.io                                  # Image registry, ghcr.io incase of GitHub Container Registry

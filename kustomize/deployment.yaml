@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotnetbasicapi
+  namespace: dotnetbasicapi
+spec:
+  minReadySeconds: 3
+  revisionHistoryLimit: 5
+  progressDeadlineSeconds: 60
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: dotnetbasicapi
+  template:
+    metadata:
+      labels:
+        app: dotnetbasicapi
+    spec:
+      containers:
+      - name: dotnetbasicapi
+        image: michwils/dotnetbasicapi:0.0.15
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 6060
+          protocol: TCP
