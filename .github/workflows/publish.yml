@@ -5,6 +5,7 @@ on:
     #branches: [master]
     paths-ignore:
       - "/kustomize/**"
+      - "package.json"
 
 env:
   REGISTRY: docker.io                                  # Image registry, ghcr.io incase of GitHub Container Registry
