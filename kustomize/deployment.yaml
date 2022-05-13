@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: dotnetbasicapi
-        image: michwils/dotnetbasicapi:0.0.15 # {"$imagepolicy": "flux-system:dotnetbasicap"}
+        image: michwils/dotnetbasicapi:0.0.15 # {"$imagepolicy": "flux-system:dotnetbasicapi"}
         imagePullPolicy: IfNotPresent
         ports:
         - name: http
