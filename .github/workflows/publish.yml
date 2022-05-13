@@ -3,10 +3,8 @@ name: Docker                                           # Name of the workflow
 on:
   push:
     #branches: [master]
-    paths-ignore:
-      - "/kustomize/*.yaml"
-      #- "/kustomize/*.*"
-      - "package.json"
+    paths:
+      - "src/**"
 
 env:
   REGISTRY: docker.io                                  # Image registry, ghcr.io incase of GitHub Container Registry
