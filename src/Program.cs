@@ -28,7 +28,7 @@ if (app.Environment.IsDevelopment())
 //app.Urls.Add("http://*:5555");
 //app.UseHttpsRedirection();
 
-//quick tests - line used for testing git actions
+//quick tests - line used for testing git actions including paths
 
 //setup
 var stateManager = probes.ConfigureProbes(ref app);
