@@ -3,6 +3,7 @@ WORKDIR /app
 
 # Copy everything
 COPY . ./
+WORKDIR /app/src
 # Restore as distinct layers
 RUN dotnet restore
 # Build and publish a release
@@ -10,9 +11,9 @@ RUN dotnet publish -c Release -o out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
-WORKDIR /app
-COPY --from=build-env /app/out .
-COPY --from=build-env /app/*.env .
+WORKDIR /app/src
+COPY --from=build-env /app/src/out .
+COPY --from=build-env /app/src/*.env .
 
 ENV ASPNETCORE_ENVIRONMENT=Development
 ENV ASPNETCORE_URLS http://*:5555
